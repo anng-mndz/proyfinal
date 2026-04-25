@@ -164,85 +164,85 @@ CREATE TABLE IF NOT EXISTS `Banco` (
 -- Nota: se mantiene separada de `usuario` ya que cliente es una entidad
 -- externa que puede no tener acceso al sistema.
 CREATE TABLE IF NOT EXISTS `Cliente` (
-  `id_cliente`      INT          NOT NULL AUTO_INCREMENT,
-  `nombre_completo` VARCHAR(150) NOT NULL,
-  `dpi_nit`         VARCHAR(30)  UNIQUE,
-  `telefono`        VARCHAR(20),
-  `direccion`       VARCHAR(200),
-  `correo`          VARCHAR(100),
-  PRIMARY KEY (`id_cliente`)
+  `Idcliente`      INT          NOT NULL AUTO_INCREMENT,
+  `Nombrecompleto` VARCHAR(150) NOT NULL,
+  `Dpinit`         VARCHAR(30)  UNIQUE,
+  `Telefono`        VARCHAR(20),
+  `Direccion`       VARCHAR(200),
+  `Correo`          VARCHAR(100),
+  PRIMARY KEY (`Idcliente`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
  
 -- Tabla: Cuenta_Bancaria
-CREATE TABLE IF NOT EXISTS `Cuenta_Bancaria` (
-  `id_cuenta`      INT           NOT NULL AUTO_INCREMENT,
-  `numero_cuenta`  VARCHAR(50)   NOT NULL UNIQUE,
-  `saldo_actual`   DECIMAL(12,2) DEFAULT 0.00,
-  `fecha_apertura` DATE          NOT NULL,
-  `id_banco`       INT           NOT NULL,
-  `id_cliente`     INT           NOT NULL,
-  `id_tipo_cuenta` INT           NOT NULL,
-  PRIMARY KEY (`id_cuenta`),
-  FOREIGN KEY (`id_banco`)       REFERENCES `Banco`          (`id_banco`),
-  FOREIGN KEY (`id_cliente`)     REFERENCES `Cliente`        (`id_cliente`),
-  FOREIGN KEY (`id_tipo_cuenta`) REFERENCES `Cat_TipoCuenta` (`id_tipo_cuenta`)
+CREATE TABLE IF NOT EXISTS `CuentaBancaria` (
+  `Idcuenta`      INT           NOT NULL AUTO_INCREMENT,
+  `Numerocuenta`  VARCHAR(50)   NOT NULL UNIQUE,
+  `Saldoactual`   DECIMAL(12,2) DEFAULT 0.00,
+  `Fechaapertura` DATE          NOT NULL,
+  `Idbanco`       INT           NOT NULL,
+  `Idcliente`     INT           NOT NULL,
+  `Idtipocuenta` INT           NOT NULL,
+  PRIMARY KEY (`Idcuenta`),
+  FOREIGN KEY (`Idbanco`)       REFERENCES `Banco`          (`Idbanco`),
+  FOREIGN KEY (`Idcliente`)     REFERENCES `Cliente`        (`Idcliente`),
+  FOREIGN KEY (`Idtipocuenta`) REFERENCES `CatTipoCuenta` (`Idtipocuenta`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
  
 -- Tabla: Movimiento_Bancario
-CREATE TABLE IF NOT EXISTS `Movimiento_Bancario` (
-  `id_movimiento`       INT           NOT NULL AUTO_INCREMENT,
-  `fecha_movimiento`    DATETIME      DEFAULT CURRENT_TIMESTAMP,
-  `monto`               DECIMAL(12,2) NOT NULL,
-  `descripcion`         VARCHAR(255),
-  `id_cuenta`           INT           NOT NULL,
-  `id_tipo_transaccion` INT           NOT NULL,
-  PRIMARY KEY (`id_movimiento`),
-  FOREIGN KEY (`id_cuenta`)           REFERENCES `Cuenta_Bancaria`    (`id_cuenta`),
-  FOREIGN KEY (`id_tipo_transaccion`) REFERENCES `Cat_TipoTransaccion` (`id_tipo_transaccion`)
+CREATE TABLE IF NOT EXISTS `MovimientoBancario` (
+  `Idmovimiento`       INT           NOT NULL AUTO_INCREMENT,
+  `Fechamovimiento`    DATETIME      DEFAULT CURRENT_TIMESTAMP,
+  `Monto`               DECIMAL(12,2) NOT NULL,
+  `Descripcion`         VARCHAR(255),
+  `Idcuenta`           INT           NOT NULL,
+  `Idtipotransaccion` INT           NOT NULL,
+  PRIMARY KEY (`Idmovimiento`),
+  FOREIGN KEY (`dcuenta`)           REFERENCES `CuentaBancaria`    (`Idcuenta`),
+  FOREIGN KEY (`Idtipotransaccion`) REFERENCES `CatTipoTransaccion` (`Idtipotransaccion`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
  
 -- Tabla: Conciliacion_Bancaria
-CREATE TABLE IF NOT EXISTS `Conciliacion_Bancaria` (
-  `id_conciliacion`    INT           NOT NULL AUTO_INCREMENT,
-  `fecha_conciliacion` DATETIME      DEFAULT CURRENT_TIMESTAMP,
-  `saldo_sistema`      DECIMAL(12,2) NOT NULL,
-  `saldo_banco`        DECIMAL(12,2) NOT NULL,
-  `diferencia`         DECIMAL(12,2) NOT NULL,
-  `id_cuenta`          INT           NOT NULL,
-  `id_estado`          INT           NOT NULL,
-  PRIMARY KEY (`id_conciliacion`),
-  FOREIGN KEY (`id_cuenta`) REFERENCES `Cuenta_Bancaria`      (`id_cuenta`),
-  FOREIGN KEY (`id_estado`) REFERENCES `Cat_EstadoConciliacion` (`id_estado`)
+CREATE TABLE IF NOT EXISTS `ConciliacionBancaria` (
+  `Idconciliacion`    INT           NOT NULL AUTO_INCREMENT,
+  `Fechaconciliacion` DATETIME      DEFAULT CURRENT_TIMESTAMP,
+  `Saldosistema`      DECIMAL(12,2) NOT NULL,
+  `Saldobanco`        DECIMAL(12,2) NOT NULL,
+  `Diferencia`         DECIMAL(12,2) NOT NULL,
+  `Idcuenta`          INT           NOT NULL,
+  `Idestado`          INT           NOT NULL,
+  PRIMARY KEY (`Idconciliacion`),
+  FOREIGN KEY (`Idcuenta`) REFERENCES `CuentaBancaria`      (`Idcuenta`),
+  FOREIGN KEY (`Idestado`) REFERENCES `CatEstadoConciliacion` (`Idestado`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
  
 -- Tabla: Bitacora_Bancaria
 -- Vinculada a usuario del módulo de seguridad
-CREATE TABLE IF NOT EXISTS `Bitacora_Bancaria` (
-  `id_bitacora`      INT          NOT NULL AUTO_INCREMENT,
-  `usuid`            INT          DEFAULT NULL,
-  `accion_realizada` VARCHAR(200),
-  `tabla_afectada`   VARCHAR(100),
-  `fecha_accion`     DATETIME     DEFAULT CURRENT_TIMESTAMP,
-  PRIMARY KEY (`id_bitacora`),
-  FOREIGN KEY (`usuid`) REFERENCES `usuario` (`usuid`)
+CREATE TABLE IF NOT EXISTS `BitacoraBancaria` (
+  `Idbitacora`      INT          NOT NULL AUTO_INCREMENT,
+  `Usuid`            INT          DEFAULT NULL,
+  `Accionrealizada` VARCHAR(200),
+  `Tablaafectada`   VARCHAR(100),
+  `Fechaaccion`     DATETIME     DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`Idbitacora`),
+  FOREIGN KEY (`Usuid`) REFERENCES `usuario` (`Usuid`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
  
 -- ============================================================
 -- DATOS INICIALES
 -- ============================================================
  
-INSERT INTO `Cat_TipoCuenta` (`nombre_tipo`, `descripcion`) VALUES
+INSERT INTO `CatTipoCuenta` (`Nombretipo`, `Descripcion`) VALUES
   ('Monetaria', 'Cuenta de uso diario'),
   ('Ahorro',    'Cuenta de ahorro personal');
  
-INSERT INTO `Cat_TipoTransaccion` (`nombre_tipo`, `descripcion`) VALUES
+INSERT INTO `CatTipoTransaccion` (`Nombretipo`, `Descripcion`) VALUES
   ('Deposito',      'Ingreso de dinero'),
   ('Retiro',        'Salida de dinero'),
   ('Transferencia', 'Movimiento entre cuentas'),
   ('Pago',          'Pago realizado'),
   ('Cobro',         'Cobro recibido');
  
-INSERT INTO `Cat_EstadoConciliacion` (`nombre_estado`) VALUES
+INSERT INTO `CatEstadoConciliacion` (`Nombreestado`) VALUES
   ('Conciliado'),
   ('Pendiente'),
   ('Con Diferencia');
