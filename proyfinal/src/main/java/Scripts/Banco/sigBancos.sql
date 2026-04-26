@@ -128,103 +128,104 @@ CREATE TABLE IF NOT EXISTS `Peliculas` (
  
 -- Catálogo: tipos de cuenta
 CREATE TABLE IF NOT EXISTS `Cat_TipoCuenta` (
-  `id_tipo_cuenta` INT          NOT NULL AUTO_INCREMENT,
-  `nombre_tipo`    VARCHAR(50)  NOT NULL UNIQUE,
-  `descripcion`    VARCHAR(150),
-  PRIMARY KEY (`id_tipo_cuenta`)
+  `TCidcuenta` INT          NOT NULL AUTO_INCREMENT,
+  `TCnombretipo`    VARCHAR(50)  NOT NULL UNIQUE,
+  `TCdescripcion`    VARCHAR(150),
+  PRIMARY KEY (`TCidcuenta`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
  
 -- Catálogo: tipos de transacción
 CREATE TABLE IF NOT EXISTS `Cat_TipoTransaccion` (
-  `id_tipo_transaccion` INT         NOT NULL AUTO_INCREMENT,
-  `nombre_tipo`         VARCHAR(50) NOT NULL UNIQUE,
-  `descripcion`         VARCHAR(150),
-  PRIMARY KEY (`id_tipo_transaccion`)
+  `TTid` INT         NOT NULL AUTO_INCREMENT,
+  `TTnombretipo`         VARCHAR(50) NOT NULL UNIQUE,
+  `TTdescripcion`         VARCHAR(150),
+  PRIMARY KEY (`TTid`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
  
 -- Catálogo: estados de conciliación
 CREATE TABLE IF NOT EXISTS `Cat_EstadoConciliacion` (
-  `id_estado`     INT         NOT NULL AUTO_INCREMENT,
-  `nombre_estado` VARCHAR(50) NOT NULL UNIQUE,
-  PRIMARY KEY (`id_estado`)
+  `Catesid`     INT         NOT NULL AUTO_INCREMENT,
+  `Catesnombreestado` VARCHAR(50) NOT NULL UNIQUE,
+  PRIMARY KEY (`Catesid`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
  
 -- Tabla: Banco
 CREATE TABLE IF NOT EXISTS `Banco` (
-  `id_banco`       INT          NOT NULL AUTO_INCREMENT,
-  `nombre_banco`   VARCHAR(100) NOT NULL,
-  `direccion`      VARCHAR(200),
-  `telefono`       VARCHAR(20),
-  `correo`         VARCHAR(100),
-  `fecha_registro` DATETIME     DEFAULT CURRENT_TIMESTAMP,
-  PRIMARY KEY (`id_banco`)
+  `Banid`       INT          NOT NULL AUTO_INCREMENT,
+  `Bannombre`   VARCHAR(100) NOT NULL,
+  `Bandireccion`      VARCHAR(200),
+  `Bantelefono`       VARCHAR(20),
+  `Bancorreo`         VARCHAR(100),
+  `Banfecharegistro` DATETIME     DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`Banid`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
  
 -- Tabla: Cliente (bancario)
 -- Nota: se mantiene separada de `usuario` ya que cliente es una entidad
 -- externa que puede no tener acceso al sistema.
 CREATE TABLE IF NOT EXISTS `Cliente` (
-  `Idcliente`      INT          NOT NULL AUTO_INCREMENT,
-  `Nombrecompleto` VARCHAR(150) NOT NULL,
-  `Dpinit`         VARCHAR(30)  UNIQUE,
-  `Telefono`        VARCHAR(20),
-  `Direccion`       VARCHAR(200),
-  `Correo`          VARCHAR(100),
-  PRIMARY KEY (`Idcliente`)
+  `Clid`      INT          NOT NULL AUTO_INCREMENT,
+  `Clinombre` VARCHAR(150) NOT NULL,
+  `Clinit`         VARCHAR(30)  UNIQUE,
+  `Clitelefono`        VARCHAR(20),
+  `Cliestado`       VARCHAR(20),
+  `Clidireccion`       VARCHAR(200),
+  `Clicorreo`          VARCHAR(100),
+  PRIMARY KEY (`Clid`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
  
 -- Tabla: Cuenta_Bancaria
 CREATE TABLE IF NOT EXISTS `CuentaBancaria` (
-  `Idcuenta`      INT           NOT NULL AUTO_INCREMENT,
-  `Numerocuenta`  VARCHAR(50)   NOT NULL UNIQUE,
-  `Saldoactual`   DECIMAL(12,2) DEFAULT 0.00,
-  `Fechaapertura` DATE          NOT NULL,
-  `Idbanco`       INT           NOT NULL,
-  `Idcliente`     INT           NOT NULL,
-  `Idtipocuenta` INT           NOT NULL,
-  PRIMARY KEY (`Idcuenta`),
-  FOREIGN KEY (`Idbanco`)       REFERENCES `Banco`          (`Idbanco`),
-  FOREIGN KEY (`Idcliente`)     REFERENCES `Cliente`        (`Idcliente`),
-  FOREIGN KEY (`Idtipocuenta`) REFERENCES `CatTipoCuenta` (`Idtipocuenta`)
+  `CBANid`      INT           NOT NULL AUTO_INCREMENT,
+  `CBANnumerocuenta`  VARCHAR(50)   NOT NULL UNIQUE,
+  `CBANsaldoactual`   DECIMAL(12,2) DEFAULT 0.00,
+  `CBANfechaapertura` DATE          NOT NULL,
+  `Banid`       INT           NOT NULL,
+  `Cliid`     INT           NOT NULL,
+  `TCidcuenta` INT           NOT NULL,
+  PRIMARY KEY (`TCidcuenta`),
+  FOREIGN KEY (`Banid`)       REFERENCES `Banco`          (`Banid`),
+  FOREIGN KEY (`Cliid`)     REFERENCES `Cliente`        (`Cliid`),
+  FOREIGN KEY (`TCidcuenta`) REFERENCES `CatTipoCuenta` (`TCicuenta`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
  
 -- Tabla: Movimiento_Bancario
 CREATE TABLE IF NOT EXISTS `MovimientoBancario` (
-  `Idmovimiento`       INT           NOT NULL AUTO_INCREMENT,
-  `Fechamovimiento`    DATETIME      DEFAULT CURRENT_TIMESTAMP,
-  `Monto`               DECIMAL(12,2) NOT NULL,
-  `Descripcion`         VARCHAR(255),
-  `Idcuenta`           INT           NOT NULL,
-  `Idtipotransaccion` INT           NOT NULL,
-  PRIMARY KEY (`Idmovimiento`),
-  FOREIGN KEY (`dcuenta`)           REFERENCES `CuentaBancaria`    (`Idcuenta`),
-  FOREIGN KEY (`Idtipotransaccion`) REFERENCES `CatTipoTransaccion` (`Idtipotransaccion`)
+  `Movbid`       INT           NOT NULL AUTO_INCREMENT,
+  `Movbfechamovimiento`    DATETIME      DEFAULT CURRENT_TIMESTAMP,
+  `Movibmonto`               DECIMAL(12,2) NOT NULL,
+  `Movdescripcion`         VARCHAR(255),
+  `CBANid`           INT           NOT NULL,
+  `TTid` INT           NOT NULL,
+  PRIMARY KEY (`Movbid`),
+  FOREIGN KEY (`CBANid`)           REFERENCES `CuentaBancaria`    (`CBANid`),
+  FOREIGN KEY (`TTid`) REFERENCES `CatTipoTransaccion` (`TTid`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
  
 -- Tabla: Conciliacion_Bancaria
 CREATE TABLE IF NOT EXISTS `ConciliacionBancaria` (
-  `Idconciliacion`    INT           NOT NULL AUTO_INCREMENT,
-  `Fechaconciliacion` DATETIME      DEFAULT CURRENT_TIMESTAMP,
-  `Saldosistema`      DECIMAL(12,2) NOT NULL,
-  `Saldobanco`        DECIMAL(12,2) NOT NULL,
-  `Diferencia`         DECIMAL(12,2) NOT NULL,
-  `Idcuenta`          INT           NOT NULL,
-  `Idestado`          INT           NOT NULL,
-  PRIMARY KEY (`Idconciliacion`),
-  FOREIGN KEY (`Idcuenta`) REFERENCES `CuentaBancaria`      (`Idcuenta`),
-  FOREIGN KEY (`Idestado`) REFERENCES `CatEstadoConciliacion` (`Idestado`)
+  `Conbid`    INT           NOT NULL AUTO_INCREMENT,
+  `conbfecha` DATETIME      DEFAULT CURRENT_TIMESTAMP,
+  `Conbsaldosistema`      DECIMAL(12,2) NOT NULL,
+  `Conbsaldobanco`        DECIMAL(12,2) NOT NULL,
+  `Conbdiferencia`         DECIMAL(12,2) NOT NULL,
+  `CBANid`          INT           NOT NULL,
+  `Catesid`          INT           NOT NULL,
+  PRIMARY KEY (`Conbid`),
+  FOREIGN KEY (`CBANid`) REFERENCES `CuentaBancaria`      (`CBANid`),
+  FOREIGN KEY (`Catesid`) REFERENCES `CatEstadoConciliacion` (`Catesid`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
  
 -- Tabla: Bitacora_Bancaria
 -- Vinculada a usuario del módulo de seguridad
 CREATE TABLE IF NOT EXISTS `BitacoraBancaria` (
-  `Idbitacora`      INT          NOT NULL AUTO_INCREMENT,
-  `Usuid`            INT          DEFAULT NULL,
-  `Accionrealizada` VARCHAR(200),
-  `Tablaafectada`   VARCHAR(100),
-  `Fechaaccion`     DATETIME     DEFAULT CURRENT_TIMESTAMP,
-  PRIMARY KEY (`Idbitacora`),
-  FOREIGN KEY (`Usuid`) REFERENCES `usuario` (`Usuid`)
+  `BBid`      INT          NOT NULL AUTO_INCREMENT,
+  `BBusuarioaccion`            INT          DEFAULT NULL,
+  `BBaccionrealizada` VARCHAR(200),
+  `BBtablaafectada`   VARCHAR(100),
+  `BBfechaaccion`     DATETIME     DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`BBid`),
+  FOREIGN KEY (`BBusuarioaccion`) REFERENCES `usuario` (`BBusuarioaccion`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
  
 -- ============================================================
