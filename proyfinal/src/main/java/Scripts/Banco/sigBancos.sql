@@ -127,7 +127,7 @@ CREATE TABLE IF NOT EXISTS `Peliculas` (
 -- ============================================================
  
 -- Catálogo: tipos de cuenta
-CREATE TABLE IF NOT EXISTS `Cat_TipoCuenta` (
+CREATE TABLE IF NOT EXISTS `CatTipoCuenta` (
   `TCidcuenta` INT          NOT NULL AUTO_INCREMENT,
   `TCnombretipo`    VARCHAR(50)  NOT NULL UNIQUE,
   `TCdescripcion`    VARCHAR(150),
@@ -135,7 +135,7 @@ CREATE TABLE IF NOT EXISTS `Cat_TipoCuenta` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
  
 -- Catálogo: tipos de transacción
-CREATE TABLE IF NOT EXISTS `Cat_TipoTransaccion` (
+CREATE TABLE IF NOT EXISTS `CatTipoTransaccion` (
   `TTid` INT         NOT NULL AUTO_INCREMENT,
   `TTnombretipo`         VARCHAR(50) NOT NULL UNIQUE,
   `TTdescripcion`         VARCHAR(150),
@@ -143,7 +143,7 @@ CREATE TABLE IF NOT EXISTS `Cat_TipoTransaccion` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
  
 -- Catálogo: estados de conciliación
-CREATE TABLE IF NOT EXISTS `Cat_EstadoConciliacion` (
+CREATE TABLE IF NOT EXISTS `CatEstadoConciliacion` (
   `Catesid`     INT         NOT NULL AUTO_INCREMENT,
   `Catesnombreestado` VARCHAR(50) NOT NULL UNIQUE,
   PRIMARY KEY (`Catesid`)
@@ -197,6 +197,9 @@ CREATE TABLE IF NOT EXISTS `MovimientoBancario` (
   `Movdescripcion`         VARCHAR(255),
   `CBANid`           INT           NOT NULL,
   `TTid` INT           NOT NULL,
+  `Movbtipomov`     VARCHAR(20) NOT NULL,
+  `Movbreferencia`   VARCHAR(50),
+  `Movbconciliado`  CHAR(1) DEFAULT 'N', 
   PRIMARY KEY (`Movbid`),
   FOREIGN KEY (`CBANid`)           REFERENCES `CuentaBancaria`    (`CBANid`),
   FOREIGN KEY (`TTid`) REFERENCES `CatTipoTransaccion` (`TTid`)
@@ -250,7 +253,7 @@ INSERT INTO `CatEstadoConciliacion` (`Nombreestado`) VALUES
  
 COMMIT;
  
-SET FOREIGN_KEY_CHECKS = 1;
+SET FOREIGN_KEY_CHECKS = 1; 
  
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
