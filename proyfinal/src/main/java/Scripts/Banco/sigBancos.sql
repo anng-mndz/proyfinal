@@ -127,7 +127,7 @@ CREATE TABLE IF NOT EXISTS `Peliculas` (
 -- ============================================================
  
 -- Catálogo: tipos de cuenta
-CREATE TABLE IF NOT EXISTS `Cat_TipoCuenta` (
+CREATE TABLE IF NOT EXISTS `CatTipoCuenta` (
   `TCidcuenta` INT          NOT NULL AUTO_INCREMENT,
   `TCnombretipo`    VARCHAR(50)  NOT NULL UNIQUE,
   `TCdescripcion`    VARCHAR(150),
@@ -135,7 +135,7 @@ CREATE TABLE IF NOT EXISTS `Cat_TipoCuenta` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
  
 -- Catálogo: tipos de transacción
-CREATE TABLE IF NOT EXISTS `Cat_TipoTransaccion` (
+CREATE TABLE IF NOT EXISTS `CatTipoTransaccion` (
   `TTid` INT         NOT NULL AUTO_INCREMENT,
   `TTnombretipo`         VARCHAR(50) NOT NULL UNIQUE,
   `TTdescripcion`         VARCHAR(150),
@@ -143,7 +143,7 @@ CREATE TABLE IF NOT EXISTS `Cat_TipoTransaccion` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
  
 -- Catálogo: estados de conciliación
-CREATE TABLE IF NOT EXISTS `Cat_EstadoConciliacion` (
+CREATE TABLE IF NOT EXISTS `CatEstadoConciliacion` (
   `Catesid`     INT         NOT NULL AUTO_INCREMENT,
   `Catesnombreestado` VARCHAR(50) NOT NULL UNIQUE,
   PRIMARY KEY (`Catesid`)
