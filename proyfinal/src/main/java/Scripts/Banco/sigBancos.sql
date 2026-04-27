@@ -197,6 +197,9 @@ CREATE TABLE IF NOT EXISTS `MovimientoBancario` (
   `Movdescripcion`         VARCHAR(255),
   `CBANid`           INT           NOT NULL,
   `TTid` INT           NOT NULL,
+  `Movbtipomov`     VARCHAR(20) NOT NULL,
+  `Movbreferencia`   VARCHAR(50),
+  `Movbconciliado`  CHAR(1) DEFAULT 'N', 
   PRIMARY KEY (`Movbid`),
   FOREIGN KEY (`CBANid`)           REFERENCES `CuentaBancaria`    (`CBANid`),
   FOREIGN KEY (`TTid`) REFERENCES `CatTipoTransaccion` (`TTid`)
