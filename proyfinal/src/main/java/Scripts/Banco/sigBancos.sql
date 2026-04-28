@@ -220,15 +220,20 @@ CREATE TABLE IF NOT EXISTS `ConciliacionBancaria` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
  
 -- Tabla: Bitacora_Bancaria
--- Vinculada a usuario del módulo de seguridad
 CREATE TABLE IF NOT EXISTS `BitacoraBancaria` (
-  `BBid`      INT          NOT NULL AUTO_INCREMENT,
-  `BBusuarioaccion`            INT          DEFAULT NULL,
-  `BBaccionrealizada` VARCHAR(200),
-  `BBtablaafectada`   VARCHAR(100),
-  `BBfechaaccion`     DATETIME     DEFAULT CURRENT_TIMESTAMP,
+  `BBid` INT NOT NULL AUTO_INCREMENT,
+  `BBusuarioaccion` INT NOT NULL,
+  `BBaccion` VARCHAR(50) NOT NULL,
+  `BBtabla` VARCHAR(100) NOT NULL,
+  `BBregistroid` INT DEFAULT NULL,
+  `BBvaloranterior` TEXT,
+  `BBvalornuevo` TEXT,
+  `BBfechaaccion` DATETIME DEFAULT CURRENT_TIMESTAMP,
+  `BBdescripcion` VARCHAR(255),
+
   PRIMARY KEY (`BBid`),
-  FOREIGN KEY (`BBusuarioaccion`) REFERENCES `usuario` (`BBusuarioaccion`)
+  FOREIGN KEY (`BBusuarioaccion`) REFERENCES `usuario` (`Usucodigo`)
+  
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
  
 -- ============================================================
