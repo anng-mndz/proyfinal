@@ -4,46 +4,55 @@
  */
 package Controlador.Banco;
 
+import java.util.Date;
+
 /**
  *
  * @author Proyecto Final - Sistema Bancario
  */
 public class clsBanco {
-    private int    idBanco;
-    private String nombreBanco;
-    private String direccion;
-    private String telefono;
-    private String correo;
+    private int Banid;
+    private String Bannombre;
+    private String Bandireccion;
+    private String Bantelefono;
+    private String Bancorreo;
+    private Date Banfecharegistro;
+    
+    
+public clsBanco(int id, String nombre, String direccion, String telefono, String correo, Date fecha) {
+        this.Banid = id;
+        this.Bannombre = nombre;
+        this.Bandireccion = direccion;
+        this.Bantelefono = telefono;
+        this.Bancorreo = correo;
+        this.Banfecharegistro = fecha;
+    }
 
     public clsBanco() {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
-    public clsBanco(int idBanco, String nombreBanco, String direccion, String telefono, String correo) {
-        this.idBanco     = idBanco;
-        this.nombreBanco = nombreBanco;
-        this.direccion   = direccion;
-        this.telefono    = telefono;
-        this.correo      = correo;
-    }
+    public int getBanid() { return Banid; }
+    public void setBanid(int Banid) { this.Banid = Banid; }
 
-    public int getIdBanco() { return idBanco; }
-    public void setIdBanco(int idBanco) { this.idBanco = idBanco; }
+    public String getBannombre() { return Bannombre; }
+    public void setBannombre(String Bannombre) { this.Bannombre = Bannombre; }
 
-    public String getNombreBanco() { return nombreBanco; }
-    public void setNombreBanco(String nombreBanco) { this.nombreBanco = nombreBanco; }
+    public String getBandireccion() { return Bandireccion; }
+    public void setBandireccion(String Bandireccion) { this.Bandireccion = Bandireccion; }
 
-    public String getDireccion() { return direccion; }
-    public void setDireccion(String direccion) { this.direccion = direccion; }
+    public String getBantelefono() { return Bantelefono; }
+    public void setBantelefono(String Bantelefono) { this.Bantelefono = Bantelefono; }
 
-    public String getTelefono() { return telefono; }
-    public void setTelefono(String telefono) { this.telefono = telefono; }
-
-    public String getCorreo() { return correo; }
-    public void setCorreo(String correo) { this.correo = correo; }
+    public String getBancorreo() { return Bancorreo; }
+    public void setBancorreo(String Bancorreo) { this.Bancorreo = Bancorreo; }
+    
+    public Date getBanfecharegistro() { return Banfecharegistro; }
+    public void setBanfecharegistro(Date Banfecharegistro) { this.Banfecharegistro = Banfecharegistro; }
 
     @Override
     public String toString() {
-        return "Banco{ idBanco=" + idBanco + ", nombreBanco=" + nombreBanco + " }";
+        return "Banco{ idBanco=" + Banid + ", nombreBanco=" + Bannombre + " }";
     }
 }
 
