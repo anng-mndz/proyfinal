@@ -30,11 +30,11 @@ public class BancoDAO {
 
             while (rs.next()) {
                 clsBanco b = new clsBanco();
-                b.setIdBanco(rs.getInt("id_banco"));
-                b.setNombreBanco(rs.getString("nombre_banco"));
-                b.setDireccion(rs.getString("direccion"));
-                b.setTelefono(rs.getString("telefono"));
-                b.setCorreo(rs.getString("correo"));
+                b.setBanid(rs.getInt("Banid"));
+                b.setBannombre(rs.getString("Bannombre"));
+                b.setBandireccion(rs.getString("Bandireccion"));
+                b.setBantelefono(rs.getString("Bantelefono"));
+                b.setBancorreo(rs.getString("Bancorreo"));
                 lista.add(b);
             }
 
@@ -50,10 +50,10 @@ public class BancoDAO {
         try (Connection conn = Conexion.getConnection();
              PreparedStatement ps = conn.prepareStatement(sql)) {
 
-            ps.setString(1, banco.getNombreBanco());
-            ps.setString(2, banco.getDireccion());
-            ps.setString(3, banco.getTelefono());
-            ps.setString(4, banco.getCorreo());
+            ps.setString(1, banco.getBannombre());
+            ps.setString(2, banco.getBandireccion());
+            ps.setString(3, banco.getBantelefono());
+            ps.setString(4, banco.getBancorreo());
             ps.executeUpdate();
 
             new BitacoraDAO().insert(clsUsuarioConectado.getUsuId(), APL_CODIGO, "INSERT");
@@ -70,11 +70,11 @@ public class BancoDAO {
         try (Connection conn = Conexion.getConnection();
              PreparedStatement ps = conn.prepareStatement(sql)) {
 
-            ps.setString(1, banco.getNombreBanco());
-            ps.setString(2, banco.getDireccion());
-            ps.setString(3, banco.getTelefono());
-            ps.setString(4, banco.getCorreo());
-            ps.setInt(5, banco.getIdBanco());
+            ps.setString(1, banco.getBannombre());
+            ps.setString(2, banco.getBandireccion());
+            ps.setString(3, banco.getBantelefono());
+            ps.setString(4, banco.getBancorreo());
+            ps.setInt(5, banco.getBanid());
             int rows = ps.executeUpdate();
 
             if (rows == 0) throw new RuntimeException("No se encontró el banco para actualizar");
@@ -117,11 +117,11 @@ public class BancoDAO {
             try (ResultSet rs = ps.executeQuery()) {
                 if (rs.next()) {
                     banco = new clsBanco();
-                    banco.setIdBanco(rs.getInt("id_banco"));
-                    banco.setNombreBanco(rs.getString("nombre_banco"));
-                    banco.setDireccion(rs.getString("direccion"));
-                    banco.setTelefono(rs.getString("telefono"));
-                    banco.setCorreo(rs.getString("correo"));
+                    banco.setBanid(rs.getInt("Banid"));
+                    banco.setBannombre(rs.getString("Bannombre"));
+                    banco.setBandireccion(rs.getString("Bandireccion"));
+                    banco.setBantelefono(rs.getString("Bantelefono"));
+                    banco.setBancorreo(rs.getString("Bancorreo"));
                 }
             }
 

@@ -183,10 +183,10 @@ CREATE TABLE IF NOT EXISTS `CuentaBancaria` (
   `Banid`       INT           NOT NULL,
   `Cliid`     INT           NOT NULL,
   `TCidcuenta` INT           NOT NULL,
-  PRIMARY KEY (`TCidcuenta`),
+  PRIMARY KEY (`CBANid`),
   FOREIGN KEY (`Banid`)       REFERENCES `Banco`          (`Banid`),
   FOREIGN KEY (`Cliid`)     REFERENCES `Cliente`        (`Cliid`),
-  FOREIGN KEY (`TCidcuenta`) REFERENCES `CatTipoCuenta` (`TCicuenta`)
+  FOREIGN KEY (`TCidcuenta`) REFERENCES `CatTipoCuenta` (`TCidcuenta`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
  
 -- Tabla: Movimiento_Bancario
@@ -240,18 +240,18 @@ CREATE TABLE IF NOT EXISTS `BitacoraBancaria` (
 -- DATOS INICIALES
 -- ============================================================
  
-INSERT INTO `CatTipoCuenta` (`Nombretipo`, `Descripcion`) VALUES
+INSERT INTO CatTipoCuenta (TCnombretipo, TCdescripcion) VALUES
   ('Monetaria', 'Cuenta de uso diario'),
   ('Ahorro',    'Cuenta de ahorro personal');
  
-INSERT INTO `CatTipoTransaccion` (`Nombretipo`, `Descripcion`) VALUES
+INSERT INTO CatTipoTransaccion (TTnombretipo, TTdescripcion) VALUES
   ('Deposito',      'Ingreso de dinero'),
   ('Retiro',        'Salida de dinero'),
   ('Transferencia', 'Movimiento entre cuentas'),
   ('Pago',          'Pago realizado'),
   ('Cobro',         'Cobro recibido');
  
-INSERT INTO `CatEstadoConciliacion` (`Nombreestado`) VALUES
+INSERT INTO CatEstadoConciliacion (Catesnombreestado) VALUES
   ('Conciliado'),
   ('Pendiente'),
   ('Con Diferencia');
