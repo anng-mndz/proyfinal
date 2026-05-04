@@ -221,6 +221,11 @@ public class MdiSeguridad extends javax.swing.JFrame {
         mnuGeneral.add(mnuReportes);
 
         mnuAyudas.setText("Ayudas");
+        mnuAyudas.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mnuAyudasActionPerformed(evt);
+            }
+        });
         mnuGeneral.add(mnuAyudas);
 
         setJMenuBar(mnuGeneral);
@@ -381,6 +386,22 @@ public class MdiSeguridad extends javax.swing.JFrame {
                         (desktopSize.height - FrameSize.height) / 2);
     ventana.setVisible(true);
     }//GEN-LAST:event_peliculasActionPerformed
+
+    private void mnuAyudasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuAyudasActionPerformed
+mnuAyudas.addActionListener(e -> {
+    try {
+        // Ruta del archivo CHM
+        String ruta = "src/main/java/Ayudas/AyudaBancos.chm";
+
+        // Ejecuta el archivo
+        Runtime.getRuntime().exec("hh.exe " + ruta);
+
+    } catch (Exception ex) {
+        ex.printStackTrace();
+        JOptionPane.showMessageDialog(null, "No se pudo abrir la ayuda");
+    }
+});
+    }//GEN-LAST:event_mnuAyudasActionPerformed
 
     /**
      * @param args the command line arguments
